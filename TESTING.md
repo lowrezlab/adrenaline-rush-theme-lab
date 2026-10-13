@@ -1,0 +1,27 @@
+# Export and install testing (2026-10-13)
+
+Results of testing the lab's "Export for BigCommerce" output in a sandbox.
+
+| Test | Method | Result |
+|---|---|---|
+| Setting keys | Every key in the config.json export checked against Cornerstone's `config.json` | 37 keys, all valid, all 7 themes |
+| CSS compiles | Compiled with Stencil CLI 10.0.0's own compiler (node-sass and dart-sass), pasted at the end of `theme.scss` and as an imported partial | 28 of 28 builds pass |
+| Theme bundles | `stencil bundle` on Cornerstone with the config merged into a variation and the CSS partial imported | Passes |
+| Works on the live theme | CSS applied to saved copies of adrenalinerush.shop's home, category, product and cart pages | No leftover old colors, no text below WCAG AA contrast, 6 themes x 4 pages |
+| Instructions | Each step checked against BigCommerce's help center ("Stencil Themes", "Using Script Manager", "Page Builder", "API Accounts") and Stencil CLI 10's `--help` and source | Corrected, see below |
+
+## What the testing changed
+
+- Adding a separate `custom.scss` does nothing: the theme only compiles files that `theme.scss` imports. The steps now paste into `theme.scss`.
+- The store already has a custom CSS layer of `body ... !important` rules (black cards, white product text, purple description tab). The export now includes a patch that outranks each one.
+- Script Manager only accepts JavaScript and applies to the live store at once, so it is no longer suggested.
+- Theme Styles font menus only list the theme's own fonts, and the browser editor cannot edit `config.json`. Fonts now load from the CSS; the config export is for Stencil CLI only.
+- On an inactive theme, Page Builder's Publish button makes it live. The steps say to use Save while previewing.
+- Four setting keys that do not exist in Stencil themes were removed.
+- `stencil push` bundles by itself and asks whether to apply (default No). Stencil CLI 10 needs Node.js 24+.
+- Contrast fixes: Afterglow buttons use near-black text on pink, Grape Soda's header purple is slightly deeper so white text passes.
+
+## Not tested
+
+Nothing was uploaded to the real store (that needs your login). Two things can only be confirmed in your control panel:
+whether `theme.scss` is editable in your theme's file editor, and whether homepage Page Builder content appears on a copied theme. The install steps tell you what to do in either case.

@@ -391,7 +391,7 @@ button,select,input{font:inherit;color:inherit}
     <div class="modal-head"><h2 id="mTitle">Export</h2><button class="icon-btn" id="copyBtn">Copy</button><button class="icon-btn" id="closeBtn">Close</button></div>
     <div class="modal-body">
       <div class="tabsx" id="exTabs">
-        <button data-v="config">Stencil config.json</button><button data-v="css">custom.css overrides</button><button data-v="vars">CSS variables</button><button data-v="steps">How to install</button>
+        <button data-v="steps">How to install</button><button data-v="css">custom.css</button><button data-v="config">config.json</button><button data-v="vars">CSS variables</button>
       </div>
       <p id="exNote"></p>
       <pre id="exOut"></pre>
@@ -439,7 +439,7 @@ const THEMES = {
        footer:'#000000',footerText:'#ffffff',imgBg:'#ffffff',band:'#be61a5',bandText:'#ffffff',radius:0,
        head:'Roboto Condensed',body:'Roboto',case:'uppercase',track:'0',cards:'bordered',hero:'splat',header_layout:'classic',promo:'static',cardBg:'#ffffff',cardText:'#000000'}},
   afterglow:{name:'Afterglow',blurb:'Dark and refined. Your bear art up front, one hot-pink accent.',
-    t:{bg:'#0c0b10',surface:'#16141c',text:'#f2eff6',muted:'#a19cab',heading:'#f7f5fa',accent:'#ff3ea5',accentInk:'#ffffff',
+    t:{bg:'#0c0b10',surface:'#16141c',text:'#f2eff6',muted:'#a19cab',heading:'#f7f5fa',accent:'#ff3ea5',accentInk:'#14070f',
        header:'#0c0b10',headerText:'#f2eff6',navBg:'#0c0b10',navText:'#f2eff6',promoBg:'#16141c',promoText:'#f2eff6',
        footer:'#08070b',footerText:'#e8e5ee',imgBg:'#1d1b24',band:'#16141c',bandText:'#f2eff6',radius:14,
        head:'Unbounded',body:'Geist',case:'uppercase',track:'-0.01em',cards:'lifted',hero:'glow',header_layout:'classic',promo:'marquee',cardBg:'#16141c',cardText:'#f2eff6'}},
@@ -465,7 +465,7 @@ const THEMES = {
        head:'Anton',body:'Space Grotesk',case:'uppercase',track:'0.005em',cards:'bordered',hero:'drop',header_layout:'classic',promo:'marquee',cardBg:'#ffffff',cardText:'#0a0a0a'}},
   bubblegum:{name:'Grape Soda',blurb:'Your purple, evolved: softer surfaces, deep plum ink, rounded and playful.',
     t:{bg:'#fbf5fa',surface:'#fffcfe',text:'#2b1631',muted:'#75627a',heading:'#2b1631',accent:'#a5408f',accentInk:'#fffcfe',
-       header:'#be61a5',headerText:'#fffcfe',navBg:'#fffcfe',navText:'#2b1631',promoBg:'#2b1631',promoText:'#ffd9f1',
+       header:'#a84f93',headerText:'#fffcfe',navBg:'#fffcfe',navText:'#2b1631',promoBg:'#2b1631',promoText:'#ffd9f1',
        footer:'#2b1631',footerText:'#f3e6f0',imgBg:'#f3e7f0',band:'#2b1631',bandText:'#fbf5fa',radius:22,
        head:'Syne',body:'Manrope',case:'none',track:'-0.02em',cards:'lifted',hero:'art',header_layout:'classic',promo:'static',cardBg:'#fffcfe',cardText:'#2b1631'}},
 };
@@ -780,38 +780,42 @@ function applyScheme(){ if(state.scheme==='auto') document.documentElement.remov
 $('schemeBtn').onclick=()=>{state.scheme=schemes[(schemes.indexOf(state.scheme)+1)%3]; applyScheme(); save();};
 applyScheme();
 
-/* ───────────── Export ───────────── */
+/* ───────────── Export ─────────────
+   Verified 2026-10-13 in a sandbox: setting keys against Cornerstone's config.json/schema.json,
+   CSS compiled with Stencil CLI 10's compiler (node-sass + dart-sass), and the CSS rendered
+   on saved copies of adrenalinerush.shop's live home, category, product and cart pages. */
 const gfont = (f,w) => `Google_${f.replace(/ /g,'+')}_${w}`;
+const TESTED = '2026-10-13';
 function exportData(){
   const k=state.current, r=resolve(k), v=cssVars(r);
+  // Only keys that exist in Cornerstone's config.json. Fonts here only work via Stencil CLI;
+  // Page Builder's font menus list just the theme's own fonts (the CSS loads ours instead).
   const config = {
-    "_comment": `Adrenaline Rush · ${THEMES[k].name}. Cornerstone-standard Stencil keys; confirm names against your theme's config.json / schema.json.`,
     "color-textBase": r.text, "color-textSecondary": r.muted, "color-textHeading": r.heading, "color-textLink": r.accentStrong, "color-textLink--hover": r.text,
     "color-primary": r.accent, "color-primaryDark": mix(r.accent,'#000000',.2), "color-secondary": r.bg, "color-greyLightest": r.surface2,
     "body-bg": r.bg, "container-border-global-color-base": r.border, "container-fill-base": r.surface,
     "header-backgroundColor": r.header, "storeName-color": r.headerText,
     "navUser-color": r.headerText, "navUser-color-hover": r.accentStrong, "navUser-indicator-backgroundColor": r.accent,
     "navPages-color": r.navText, "navPages-color-hover": r.accentStrong, "navPages-subMenu-backgroundColor": r.navBg,
-    "search-backgroundColor": v['--search-bg'],
     "button--default-color": r.text, "button--default-borderColor": r.borderStrong, "button--default-borderColorActive": r.text,
     "button--primary-color": r.accentInk, "button--primary-backgroundColor": r.accent, "button--primary-backgroundColorHover": mix(r.accent, r.dark?'#ffffff':'#000000', .12), "button--primary-backgroundColorActive": mix(r.accent,'#000000',.2),
     "card-title-color": r.heading, "card-title-color-hover": r.accentStrong, "card-figcaption-button-background": r.accent, "card-figcaption-button-color": r.accentInk,
     "input-font-color": r.text, "input-border-color": r.borderStrong, "input-bg-color": r.surface,
-    "footer-backgroundColor": r.footer, "footer-heading-fontColor": v['--footer-head'], "footer-link-color": r.footerText,
-    "headings-font": gfont(r.head, HEAD_WEIGHT[r.head]), "body-font": gfont(r.body, 400), "logo-font": gfont(r.head, HEAD_WEIGHT[r.head]),
+    "footer-backgroundColor": r.footer,
+    "headings-font": gfont(r.head, HEAD_WEIGHT[r.head]), "body-font": gfont(r.body, 400),
   };
   const fontsUrl = `https://fonts.googleapis.com/css2?family=${r.head.replace(/ /g,'+')}:wght@400;${HEAD_WEIGHT[r.head]}&family=${r.body.replace(/ /g,'+')}:wght@400;600;700&display=swap`;
   const rad = r.radius+'px', brad = (r.radius>=14?999:r.radius)+'px';
-  const css = `/* Adrenaline Rush · ${THEMES[k].name}
-   Overrides for things Theme Styles can't set (radius, casing, tracking, card treatment).
-   Selectors are Cornerstone-standard Stencil classes. Your theme (by Weizen Young) may
-   rename some of them, so check each one with your browser inspector before going live. */
+  const css = `/* Adrenaline Rush: ${THEMES[k].name} theme (from the Theme Lab, tested ${TESTED})
+   Paste this whole block at the very END of assets/scss/theme.scss.
+   Part 1 styles standard Stencil classes. Part 2 is specific to adrenalinerush.shop. */
 @import url('${fontsUrl}');
 
 :root{
-${Object.entries(v).filter(([n])=>!n.includes('font-family')).map(([n,val])=>`  ${n}: ${val};`).join('\n')}
+${Object.entries(v).map(([n,val])=>`  ${n}: ${val};`).join('\n')}
 }
 
+/* ===== Part 1: standard Stencil classes ===== */
 body{ background:var(--bg); color:var(--text); font-family:var(--font-body); }
 h1,h2,h3,h4,.page-heading,.productView-title{ font-family:var(--font-head); font-weight:var(--head-weight); text-transform:var(--head-case); letter-spacing:var(--head-track); color:var(--heading); }
 
@@ -820,7 +824,7 @@ h1,h2,h3,h4,.page-heading,.productView-title{ font-family:var(--font-head); font
 .navPages-container,.navPages{ background:var(--nav-bg); }
 .navPages-action{ color:var(--nav-text); letter-spacing:.09em; }
 .navPages-action:hover,.navPages-action.activePage{ color:var(--accent-strong); }
-.form-input--search,.search-query{ background:var(--search-bg); border-radius:${brad}; }
+.form-input[data-search-quick]{ background:var(--search-bg); color:var(--header-text); border-color:var(--search-line); border-radius:${brad}; }
 
 /* buttons */
 .button{ border-radius:${brad}; text-transform:var(--btn-case); letter-spacing:var(--btn-track); }
@@ -843,41 +847,157 @@ h1,h2,h3,h4,.page-heading,.productView-title{ font-family:var(--font-head); font
 .footer{ background:var(--footer-bg); color:var(--footer-text); }
 .footer-info-heading{ color:var(--footer-head); }
 .footer a{ color:var(--footer-text); }
+
+/* ===== Part 2: adrenalinerush.shop patch =====
+   Your theme already ends with custom rules written as "body <selector> { ... !important }"
+   (black cards, white product text, purple description tab). Each rule below repeats one of
+   those selectors with "html " in front, which is just specific enough to win.
+   It also covers Weizen Young theme classes that hardcode colors. */
+html body .header-logo--wrap{ background:var(--header-bg)!important; }
+html body .header-logo-image{ filter:var(--logo-filter); }  /* keeps the black logo outline visible on dark headers */
+html body .page-heading,html body .productView-title{ text-transform:var(--head-case)!important; }
+html body .header .navPages-container{ background:var(--nav-bg)!important; }
+html body .form-input[data-search-quick]{ background:var(--search-bg)!important; color:var(--header-text)!important; }
+html body .navUser-action{ color:var(--header-text)!important; }
+html body .card,html body .card-body,
+html body .productCarousel .card,html body .productCarousel .card-body,
+html body .productGrid .card,html body .productGrid .card-body{ background-color:var(--card-bg)!important; }
+html body .card-figure{ background-color:var(--img-bg)!important; }
+html body .card .price,html body .card-text,html body .card-title,html body .card-title a{ color:var(--heading)!important; }
+html body .card-figcaption-button{ background:var(--accent)!important; color:var(--accent-ink)!important; border-color:var(--accent)!important; }
+html body .button--secondary{ background:transparent!important; color:var(--text)!important; border-color:var(--border-strong)!important; }
+html body .card-figcaption{ background-color:transparent!important; }
+html body .card-figcaption .button--secondary{ background:var(--surface)!important; color:var(--text)!important; }
+html body .form-field{ background-color:transparent!important; }
+html body .form-label,html body .card-compare,html body .productView-info-name,html body .productView-info-value{ color:var(--text)!important; }
+html body .breadcrumb,html body .breadcrumb-label,html body .pagination-link{ color:var(--text)!important; }
+html body .banners .banner,html body .banners .banner p,html body .banners .banner b{ color:var(--text)!important; }
+html body .footer-newsletter h5,html body .footer-newsletter .footer-info-heading{ color:var(--heading)!important; }
+html body .footer address,html body .footer .powered-by,html body .footer p{ color:var(--footer-text)!important; }
+html body .page-heading,html body .productCarousel-title{ color:var(--heading)!important; }
+html body .productView-details.product-data{ background-color:var(--surface)!important; }
+html body .productView-title{ color:var(--heading)!important; }
+html body .productView-details.product-data,html body .productView-details.product-data .price,
+html body .productView-details.product-data .productView-brand,html body .productView-details.product-data .productView-info,
+html body .productView-details.product-data .productView-price,html body .productView-details.product-data a{ color:var(--text)!important; }
+html body #accordion--description{ background-color:var(--surface)!important; }
+html body #accordion--description,html body #accordion--description a,
+html body #accordion--description p,html body #accordion--description span{ color:var(--text)!important; }
+html body .accordion-block:has(#accordion--description) .accordion-navigation{ background-color:var(--accent)!important; }
+html body .accordion-block:has(#accordion--description) .accordion-title{ color:var(--accent-ink)!important; }
+html body .banners{ background-color:var(--bg)!important; }
+html body .banners.blog-posts-wrap{ background-color:var(--surface-2)!important; }
+html body .banners.blog-posts-wrap,html body .banners.blog-posts-wrap .page-heading,html body .banners.blog-posts-wrap a,
+html body .banners.blog-posts-wrap h2,html body .banners.blog-posts-wrap h3,html body .banners.blog-posts-wrap p{ color:var(--text)!important; }
+html body .grid-bg{ background:var(--bg)!important; }
+html body .footer-newsletter{ background:var(--surface-2)!important; color:var(--text)!important; }
+html body .footer-newsletter .form-input,html body .form-select{ background-color:var(--input-bg)!important; color:var(--text)!important; border-color:var(--border-strong)!important; }
+/* Page Builder blocks on the homepage have black backgrounds set in Page Builder.
+   This clears those colors so the theme background shows (image blocks are unaffected). */
+html body [data-sub-layout-container],html body [data-sub-layout],html body .pbw-heading{ background-color:transparent!important; }
 `;
   const vars = `:root{\n${Object.entries(v).map(([n,val])=>`  ${n}: ${val};`).join('\n')}\n}`;
-  const steps = `Installing "${THEMES[k].name}" on adrenalinerush.shop (BigCommerce / Stencil)
+  const name = THEMES[k].name;
+  const steps = `Installing the "${name}" theme on adrenalinerush.shop
+Checked ${TESTED} against BigCommerce's help center and developer docs, Stencil CLI 10.0.0,
+and saved copies of your live pages. Your live store does not change until Step 7.
 
-SAFE PATH (nothing changes for shoppers until you click Apply)
-1. Storefront → Themes → on your current theme click "Advanced → Make a Copy".
-   Name it "${THEMES[k].name} test".
-2. On the copy: "Customize" opens Page Builder → Theme Styles.
-   Set the colors and fonts from the "Stencil config.json" tab here
-   (header background, body background, primary button, card title, footer, fonts).
-3. For radius / uppercase / card shadows, which Theme Styles can't set:
-   Advanced → Edit Theme Files → assets/scss/ → add a file named custom.scss
-   (or append to theme.scss), paste the "custom.css overrides" tab, Save & apply.
-   Prefer not to edit files? Script Manager → Create a script → Location: Head,
-   Pages: All, Script type: Script → wrap the CSS in <style>…</style>.
-4. Use "Preview" on the copied theme and check: home, a category, a product page,
-   cart, and checkout, on both desktop and phone.
-5. When it looks right, click Apply. The old theme stays in My Themes, so rolling back
-   is one click.
+You need the Store Design and Design Mode user permissions (the store owner has them).
 
-FASTEST PATH (developer)
-  npm i -g @bigcommerce/stencil-cli
-  stencil init           # store URL + API token with Themes scope
-  stencil start          # live local preview against real store data
-  # edit config.json "settings" with the values from the config tab, add custom.scss
-  stencil bundle && stencil push   # uploads as a new theme, still not applied
 
-NOTE
-Keys and selectors here follow Cornerstone, BigCommerce's reference theme.
-Your theme is by Weizen Young, so some names may differ. Download the theme first
-and search its config.json for each key before pasting.`;
+PART A: IN THE CONTROL PANEL (no software needed)
+
+1. Go to Storefront › Themes.
+   (Multi-Storefront: Channels › Channel Manager › your storefront › Themes.)
+
+2. Copy your current theme.
+   On your current theme, open the ⋯ menu and choose "Make a copy".
+   Name it "${name} test" and click "Duplicate". The copy appears in the theme library
+   after a few seconds.
+
+3. Open the copy's files.
+   On "${name} test", open the ⋯ menu and choose "Edit theme files".
+   (In Chrome, allow pop-ups if nothing opens.)
+
+4. Paste the CSS.
+   In the file list open assets › scss › theme.scss.
+   Click at the very end of the file, below the last line, and paste everything from the
+   "custom.css" tab of this export.
+   Paste into theme.scss itself. A new file such as custom.scss is ignored, because the
+   theme only loads files that theme.scss imports.
+   If theme.scss is greyed out (read-only) or not listed, use Part B instead.
+
+5. Click "Save File". BigCommerce rebuilds the theme, which can take a few minutes.
+
+6. Preview the copy.
+   Back in Storefront › Themes, open the ⋯ menu on "${name} test" and choose "Customize".
+   Page Builder opens on the copy's homepage.
+   - Check: header, homepage banners and blocks, a category page, a product page, the cart.
+   - Switch to Preview mode to click through to other pages.
+   - Use the device icons at the top to check tablet and phone.
+   - If you change anything here, click "Save". Do NOT click "Publish" yet:
+     on a copied theme, Publish makes it your live theme.
+   - If the homepage banners or blocks are missing on the copy, stop here and do not publish.
+
+7. Go live.
+   When everything looks right, click "Publish" in Page Builder
+   (or "Apply theme" on "${name} test" in Storefront › Themes).
+
+8. Undo, if needed.
+   Storefront › Themes › your original theme › "Apply theme".
+   The original theme was never edited.
+
+Not used, on purpose:
+- Theme Styles: its font menus only list the fonts your theme ships with. The CSS loads the
+  new fonts itself, so you don't need to change anything there.
+- Script Manager: it only accepts JavaScript, and anything added there goes live on the
+  current theme immediately, so it can't be used to test safely.
+- The "config.json" tab: the control panel can't edit config.json. It is only for Part B.
+
+
+PART B: FOR A DEVELOPER (Stencil CLI)
+
+Requires Node.js 24 or newer (Stencil CLI 10 needs it).
+
+1. Create a token: Settings › Store-level API accounts › "+ Create API Account".
+   Token type: Stencil-CLI. Give it a name. Access level: "publish theme"
+   ("local development only" is enough if you won't push). Click "Save" and keep the
+   credentials: they are shown only once.
+
+2. Download the theme: Storefront › Themes › ⋯ on your current theme ›
+   "Download current theme". Unzip it and open a terminal in that folder.
+
+3. Install and connect:
+     npm install -g @bigcommerce/stencil-cli
+     stencil init --url https://adrenalinerush.shop --token YOUR_TOKEN --port 3000
+     stencil pull
+   stencil init also installs the theme's packages. If it asks which package manager
+   to use, choose npm. stencil pull brings in your latest saved Page Builder settings.
+
+4. Add the CSS: create assets/scss/_lab-theme.scss and paste the "custom.css" tab into it.
+   Then add this as the very last line of assets/scss/theme.scss:
+     @import "lab-theme";
+
+5. Optional, config.json: only copy keys from the "config.json" tab that already exist in
+   your theme's config.json. If config.json has a "variations" list, put them in the
+   "settings" of the variation your store uses: variation settings override the top level.
+
+6. Preview locally:
+     stencil start
+   then open http://localhost:3000.
+
+7. Upload without going live:
+     stencil push
+   When it asks "Would you like to apply your theme to your store? (y/N)", press Enter
+   (the default is No). The theme appears in Storefront › Themes with a "Custom" badge
+   and the same name as your current theme. Rename it first (⋯ › "Rename"), then preview
+   and go live with Part A, steps 6-8.
+   Your store can hold 20 themes. If you're at the limit, push asks you to pick themes to
+   delete and deletes them immediately, so remove an unused theme first.`;
   return {config: JSON.stringify(config,null,2), css, vars, steps};
 }
-let exTab='config';
-const exNotes={config:'Paste into the "settings" block of config.json, or enter these values by hand in Page Builder → Theme Styles.',css:'Covers what Theme Styles can’t: radius, casing, card treatment. Add as custom.scss or via Script Manager.',vars:'Raw design tokens for this theme, including your tweaks.',steps:'Step-by-step install that keeps the live site untouched until you choose to switch.'};
+let exTab='steps';
+const exNotes={config:'Theme setting values, for a developer using Stencil CLI (Part B, step 5). The control panel cannot edit config.json.',css:'Paste at the very end of assets/scss/theme.scss (Part A, step 4). Includes the fonts, so Theme Styles needs no changes.',vars:'Raw design tokens for this theme, including your tweaks.',steps:'Tested install steps. Your live store does not change until you publish.'};
 function showEx(){ const d=exportData(); $('exOut').textContent=d[exTab]; $('exNote').textContent=exNotes[exTab]; $('exTabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===exTab)); $('mTitle').textContent='Export · '+THEMES[state.current].name; }
 $('exportBtn').onclick=()=>{showEx(); $('modal').classList.add('open');};
 $('exTabs').onclick=e=>{const b=e.target.closest('button'); if(b){exTab=b.dataset.v; showEx();}};

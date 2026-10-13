@@ -25,3 +25,14 @@ Results of testing the lab's "Export for BigCommerce" output in a sandbox.
 
 Nothing was uploaded to the real store (that needs your login). Two things can only be confirmed in your control panel:
 whether `theme.scss` is editable in your theme's file editor, and whether homepage Page Builder content appears on a copied theme. The install steps tell you what to do in either case.
+
+## Real-theme test (2026-10-13, later the same day)
+
+Your own theme (Roots 5.2.2, downloaded with "Download current theme") was built locally with Stencil CLI 10.0.0
+following Part B, with the Afterglow CSS added as `_lab-theme.scss` and imported at the end of `theme.scss`.
+
+- `stencil start` previewed it against the live catalog at localhost:3000.
+- Home, category, product and cart: no leftover old colors, no text below WCAG AA contrast, fonts loaded. Checked at desktop and phone width.
+- Found and fixed in the steps: `stencil init` fails on downloaded themes ("No package manager auto-detected") because they have no lockfile. Part B now uses `--skipInstall` and a separate `npm install`, which was tested.
+
+Still untested: the control-panel route (Part A) and uploading with `stencil push`. Nothing was uploaded.

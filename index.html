@@ -900,7 +900,7 @@ html body [data-sub-layout-container],html body [data-sub-layout],html body .pbw
   const name = THEMES[k].name;
   const steps = `Installing the "${name}" theme on adrenalinerush.shop
 Checked ${TESTED} against BigCommerce's help center and developer docs, Stencil CLI 10.0.0,
-and saved copies of your live pages. Your live store does not change until Step 7.
+and a local build of your own theme (Roots 5.2.2) with this CSS. Your live store does not change until Step 7.
 
 You need the Store Design and Design Mode user permissions (the store owner has them).
 
@@ -967,12 +967,18 @@ Requires Node.js 24 or newer (Stencil CLI 10 needs it).
 2. Download the theme: Storefront › Themes › ⋯ on your current theme ›
    "Download current theme". Unzip it and open a terminal in that folder.
 
-3. Install and connect:
+3. Install and connect (run these one at a time):
      npm install -g @bigcommerce/stencil-cli
-     stencil init --url https://adrenalinerush.shop --token YOUR_TOKEN --port 3000
+     stencil init --url https://adrenalinerush.shop --port 3000 --packageManager npm --skipInstall
+     npm install
      stencil pull
-   stencil init also installs the theme's packages. If it asks which package manager
-   to use, choose npm. stencil pull brings in your latest saved Page Builder settings.
+   stencil init asks for your token: paste it and press Enter. The token stays visible in
+   that terminal window, so close it afterwards.
+   Keep --skipInstall and run npm install yourself: a downloaded theme has no lockfile, and
+   without it stencil init stops with "No package manager auto-detected".
+   stencil pull brings in your latest saved Page Builder settings.
+   If the theme folder is in Dropbox, tell Dropbox to ignore node_modules (about 1,000
+   folders) and secrets.stencil.json (it holds your token).
 
 4. Add the CSS: create assets/scss/_lab-theme.scss and paste the "custom.css" tab into it.
    Then add this as the very last line of assets/scss/theme.scss:

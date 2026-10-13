@@ -6,7 +6,8 @@
 <title>Adrenaline Rush Theme Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;600;800&family=Roboto+Condensed:wght@400;600;700&family=Roboto:wght@400;700&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@600;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=EB+Garamond:ital,wght@0,400;0,500;1,500&family=Geist:wght@400;500;600;700&family=Inter+Tight:wght@400;500;700&family=Manrope:wght@400;600;800&family=Roboto+Condensed:wght@400;600;700&family=Roboto:wght@400;700&family=Schibsted+Grotesk:wght@400;600;800&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@600;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 <style>
 /* ───────────── Lab chrome (neutral, never themed) ───────────── */
 :root{
@@ -21,7 +22,7 @@
 :root[data-theme="dark"]{ --lab-bg:#0e0d11; --lab-rail:#17161b; --lab-ink:#efedf3; --lab-muted:#9a97a3; --lab-line:#2a2830; --lab-chip:#222027; }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{background:var(--lab-bg);color:var(--lab-ink);font:14px/1.45 Inter,system-ui,sans-serif;display:flex;overflow:hidden}
+body{background:var(--lab-bg);color:var(--lab-ink);font:14px/1.45 Geist,system-ui,sans-serif;display:flex;overflow:hidden}
 button,select,input{font:inherit;color:inherit}
 .rail{width:316px;flex:none;background:var(--lab-rail);border-right:1px solid var(--lab-line);overflow-y:auto;padding:18px 18px 40px}
 .rail h1{font-size:15px;margin:0 0 2px;letter-spacing:-.01em}
@@ -84,6 +85,8 @@ button,select,input{font:inherit;color:inherit}
 .store .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .store .btn-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--accent-ink);border:0;border-radius:var(--btn-radius);padding:14px 26px;font:600 14px/1 var(--font-body);letter-spacing:var(--btn-track);text-transform:var(--btn-case);cursor:pointer;transition:filter .15s,transform .15s}
 .store .btn-p:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.store .btn-p:active,.store .btn-s:active,.store .chip:active{transform:scale(.98)}
+.store .ph{font-size:18px;line-height:1}
 .store .btn-s{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--text);border:1.5px solid var(--border-strong);border-radius:var(--btn-radius);padding:12.5px 24px;font:600 14px/1 var(--font-body);letter-spacing:var(--btn-track);text-transform:var(--btn-case);cursor:pointer}
 
 /* promo bar */
@@ -104,7 +107,7 @@ button,select,input{font:inherit;color:inherit}
 .store .search{display:flex;align-items:center;gap:10px;background:var(--search-bg);border:1px solid var(--search-line);border-radius:var(--btn-radius);padding:11px 16px;color:var(--header-muted);font-size:14px;max-width:460px;width:100%;justify-self:center}
 .store .hdr-actions{display:flex;align-items:center;gap:20px;font-size:14px;font-weight:500}
 .store .acct{display:flex;gap:7px;align-items:center}
-.store .cart-pill{display:inline-flex;align-items:center;gap:8px;background:var(--cart-bg);color:var(--cart-text);border-radius:999px;padding:8px 14px;font-weight:600}
+.store .cart-pill{display:inline-flex;align-items:center;gap:8px;background:var(--cart-bg);color:var(--cart-text);border-radius:var(--btn-radius);padding:8px 14px;font-weight:600}
 .store .cart-pill i{font-style:normal;background:var(--accent);color:var(--accent-ink);border-radius:999px;min-width:20px;height:20px;display:inline-grid;place-items:center;font-size:11px;padding:0 6px}
 .store .nav{background:var(--nav-bg);color:var(--nav-text);border-bottom:1px solid var(--border)}
 .store .nav ul{list-style:none;margin:0;display:flex;justify-content:var(--nav-align);gap:34px;padding-top:13px;padding-bottom:13px}
@@ -121,20 +124,22 @@ button,select,input{font:inherit;color:inherit}
 .store .hero-splat .wrap{min-height:440px;display:grid;place-items:center;text-align:center}
 .store .neon-box{background:rgba(0,0,0,.72);padding:22px 30px;border-radius:4px}
 .store .neon-box p{margin:0;font:600 30px/1.3 Roboto,sans-serif;color:#fff;text-shadow:0 0 8px #ff8cf0,0 0 18px #ff3ec8}
-.store .hero-glow::before{content:"";position:absolute;inset:0;background:url(https://cdn11.bigcommerce.com/s-1sco5eyhmh/images/stencil/original/carousel/3/Banner_-_1.jpg?c=1) center/cover;opacity:.22;mix-blend-mode:screen}
-.store .hero-glow::after{content:"";position:absolute;width:620px;height:620px;right:-120px;top:-160px;background:radial-gradient(circle,var(--accent) 0%,transparent 62%);opacity:.35;filter:blur(20px)}
+.store .hero-glow::before{content:"";position:absolute;inset:0 0 0 30%;background:url(https://cdn11.bigcommerce.com/s-1sco5eyhmh/images/stencil/original/carousel/3/Banner_-_1.jpg?c=1) 70% center/cover;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 45%);mask-image:linear-gradient(90deg,transparent 0%,#000 45%)}
 .store .hero-glow .wrap,.store .hero-type .wrap,.store .hero-split .wrap{position:relative;z-index:1}
 .store .hero-copy{max-width:640px}
-.store .hero-copy .h{font-size:clamp(44px,7.2cqi,92px)}
-.store .hero-copy p{font-size:18px;color:var(--hero-muted);max-width:500px;margin:20px 0 30px}
+.store .hero-copy .h{font-size:clamp(38px,5cqi,68px);line-height:1.04}
+.store .hero-copy p{font-size:18px;color:var(--hero-muted);max-width:460px;margin:20px 0 30px}
 .store .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.store .hero-glow .wrap{padding-top:110px;padding-bottom:110px}
+.store .hero-glow .wrap{padding-top:88px;padding-bottom:88px}
+.store .hero-glow .hero-copy{max-width:min(760px,62cqi)}
+.store .hero-glow .hero-copy .h{font-size:clamp(32px,4.3cqi,58px)}
+.store .hero-split .hero-copy .h{font-size:clamp(36px,4.2cqi,58px)}
 .store .hero-split .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-top:70px;padding-bottom:70px}
 .store .collage{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .store .collage img{border-radius:var(--radius);background:var(--img-bg);aspect-ratio:1;object-fit:cover;width:100%}
 .store .collage img:first-child{grid-row:span 2;aspect-ratio:auto;height:100%}
-.store .hero-type .wrap{padding-top:90px;padding-bottom:70px}
-.store .hero-type .h{font-size:clamp(56px,11cqi,168px);line-height:.9}
+.store .hero-type .wrap{padding-top:80px;padding-bottom:64px}
+.store .hero-type .h{font-size:clamp(56px,10cqi,150px);line-height:1}
 .store .hero-type .row2{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-top:34px;flex-wrap:wrap}
 .store .hero-type p{max-width:420px;margin:0;color:var(--hero-muted);font-size:17px}
 .store .hero-drop .wrap{padding-top:40px;padding-bottom:40px;display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:540px;gap:20px}
@@ -143,25 +148,18 @@ button,select,input{font:inherit;color:inherit}
 .store .drop-main p{margin:0 0 18px;font-weight:500;max-width:380px}
 .store .drop-main .btn-p{background:var(--accent-ink);color:var(--accent);align-self:flex-start}
 .store .drop-side{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:20px;min-height:0}
-.store .drop-side figure{margin:0;position:relative;border-radius:var(--radius);overflow:hidden;background:var(--img-bg);border:var(--card-border)}
+.store .drop-side figure{margin:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:8px;cursor:pointer;min-height:0}
+.store .drop-side .fimg{border:var(--card-border);background:var(--img-bg);overflow:hidden;min-height:0}
 .store .drop-side img{width:100%;height:100%;object-fit:cover}
-.store .drop-side figcaption{position:absolute;left:14px;bottom:14px;background:var(--surface);color:var(--text);padding:6px 10px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:calc(var(--radius) / 2)}
+.store .drop-side figcaption{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 
 .store .hero-art .wrap{padding-top:28px;padding-bottom:28px}
 .store .art-frame{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:16/7;background:#000 url(https://cdn11.bigcommerce.com/s-1sco5eyhmh/images/stencil/original/carousel/5/Banner_-_3.jpg?c=1) center/cover}
 .store .art-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.35) 45%,transparent 70%)}
-.store .art-copy{position:absolute;z-index:1;left:clamp(22px,5cqi,64px);top:50%;transform:translateY(-50%);max-width:46%;color:#fff}
-.store .art-copy .h{color:#fff;font-size:clamp(34px,5.6cqi,76px)}
+.store .art-copy{position:absolute;z-index:1;left:clamp(22px,5cqi,64px);top:50%;transform:translateY(-50%);max-width:44%;color:#f7f5f8}
+.store .art-copy .h{color:#f7f5f8;font-size:clamp(30px,4.2cqi,58px);line-height:1.04}
 .store .art-copy p{margin:16px 0 26px;font-size:17px;opacity:.85}
 
-/* value strip */
-.store .values{border-bottom:1px solid var(--border);background:var(--surface-2)}
-.store .values .wrap{display:grid;grid-template-columns:repeat(3,1fr)}
-.store .val{display:flex;gap:14px;align-items:center;padding:22px 0}
-.store .val+.val{padding-left:28px;border-left:1px solid var(--border)}
-.store .val .ic{width:38px;height:38px;flex:none;border-radius:999px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-strong)}
-.store .val b{display:block;font-size:14.5px}
-.store .val span{font-size:13px;color:var(--muted)}
 
 /* sections */
 .store section.block{padding:72px 0}
@@ -179,8 +177,6 @@ button,select,input{font:inherit;color:inherit}
 .store[data-cards="flat"] .card .img{border-radius:var(--radius)}
 .store .card .img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .store .card:hover .img img{transform:scale(1.05)}
-.store .badge{position:absolute;top:10px;left:10px;display:flex;gap:5px;flex-wrap:wrap}
-.store .badge span{background:var(--tag-bg);color:var(--tag-text);font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 8px;border-radius:999px}
 .store .quick{position:absolute;left:10px;right:10px;bottom:10px;opacity:0;transform:translateY(6px);transition:.2s}
 .store .card:hover .quick{opacity:1;transform:none}
 .store .quick .btn-p{width:100%;padding:11px}
@@ -194,11 +190,12 @@ button,select,input{font:inherit;color:inherit}
 /* bundle band */
 .store .bundle{background:var(--band-bg);color:var(--band-text)}
 .store .bundle .wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:center;padding-top:70px;padding-bottom:70px}
-.store .bundle .h{color:inherit;font-size:clamp(34px,4.6cqi,58px)}
+.store .bundle .h{color:inherit;font-size:clamp(30px,3.6cqi,46px)}
 .store .bundle p{opacity:.8;margin:16px 0 0;max-width:400px}
-.store .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.store .tiers{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:14px;align-items:stretch}
 .store .tier{border:1.5px solid var(--band-line);border-radius:var(--radius);padding:24px 20px}
-.store .tier.hot{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.store .tier.hot{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);padding:30px 26px}
+.store .tier.hot .big{font-size:58px}
 .store .tier .q{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
 .store .tier .big{font-family:var(--font-head);font-weight:var(--head-weight);font-size:44px;line-height:1;margin:12px 0 6px;letter-spacing:var(--head-track)}
 .store .tier .each{font-size:13.5px;opacity:.85}
@@ -209,13 +206,14 @@ button,select,input{font:inherit;color:inherit}
 .store .story-img img{width:100%;height:100%;object-fit:cover}
 .store .story .h{font-size:clamp(30px,4cqi,48px)}
 .store .story p{color:var(--muted);font-size:16.5px;margin:18px 0 0}
-.store .stats{display:flex;gap:36px;margin-top:28px}
-.store .stats b{display:block;font-family:var(--font-head);font-weight:var(--head-weight);font-size:34px;line-height:1;color:var(--heading)}
-.store .stats span{font-size:13px;color:var(--muted)}
 .store .news{background:var(--surface-2);border-top:1px solid var(--border)}
 .store .news .wrap{display:flex;justify-content:space-between;align-items:center;gap:30px;padding-top:48px;padding-bottom:48px;flex-wrap:wrap}
 .store .news .h{font-size:28px}
-.store .news form{display:flex;gap:10px;flex:1;max-width:480px}
+.store .news form{flex:1;max-width:480px}
+.store .field{display:grid;gap:8px}
+.store .field label{font-size:13px;font-weight:600;color:var(--text)}
+.store .field-row{display:flex;gap:10px}
+.store .news input:focus{outline:2px solid var(--accent-strong);outline-offset:2px}
 .store .news input{flex:1;min-width:0;background:var(--input-bg);border:1.5px solid var(--border-strong);border-radius:var(--btn-radius);padding:13px 16px;color:var(--text)}
 
 /* footer */
@@ -234,7 +232,7 @@ button,select,input{font:inherit;color:inherit}
 .store .cat-head p{color:var(--muted);margin:10px 0 0;max-width:520px}
 .store .toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px;flex-wrap:wrap}
 .store .chips{display:flex;gap:8px;flex-wrap:wrap}
-.store .chip{border:1.5px solid var(--border-strong);background:transparent;color:var(--text);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.store .chip{border:1.5px solid var(--border-strong);background:transparent;color:var(--text);border-radius:var(--btn-radius);transition:background-color .15s,transform .15s;padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer}
 .store .chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
 .store .sort{font-size:13px;color:var(--muted)}
 .store .sort select{background:var(--input-bg);color:var(--text);border:1px solid var(--border-strong);border-radius:calc(var(--btn-radius) / 2 + 4px);padding:7px 10px;margin-left:6px}
@@ -253,7 +251,7 @@ button,select,input{font:inherit;color:inherit}
 .store .pprice b{font-size:30px;font-weight:700}
 .store .pprice s{color:var(--muted)}
 .store .tag-row{display:flex;gap:6px;margin:18px 0 0;flex-wrap:wrap}
-.store .tag-row span{background:var(--accent-soft);color:var(--accent-strong);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+.store .tag-row span{background:var(--accent-soft);color:var(--accent-strong);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:var(--btn-radius)}
 .store .tier-table{border:1px solid var(--border);border-radius:var(--radius);margin:24px 0;overflow:hidden}
 .store .tier-table div{display:grid;grid-template-columns:1fr auto auto;gap:18px;padding:12px 16px;font-size:14px;align-items:center}
 .store .tier-table div+div{border-top:1px solid var(--border)}
@@ -281,6 +279,11 @@ button,select,input{font:inherit;color:inherit}
 .store .prog i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
 .store .toast .msg{font-size:13px}
 
+@media (prefers-reduced-motion: reduce){
+  .store *,.store *::before,.store *::after{animation:none!important;transition:none!important}
+  .store .card:hover,.store .btn-p:hover{transform:none}
+}
+
 /* responsive (container queries respond to the simulated device width) */
 @container store (max-width: 980px){
   .store .grid{grid-template-columns:repeat(3,1fr)}
@@ -299,10 +302,7 @@ button,select,input{font:inherit;color:inherit}
   .store .art-copy{top:auto;bottom:24px;transform:none;max-width:none;right:20px}
   .store .wrap{padding:0 16px}
   .store .grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .store .values .wrap{grid-template-columns:1fr}
-  .store .val+.val{padding-left:0;border-left:0;border-top:1px solid var(--border)}
-  .store .val{padding:14px 0}
-  .store .nav ul{gap:20px;overflow-x:auto;justify-content:flex-start}
+  .store .nav ul{gap:20px;overflow-x:auto;justify-content:flex-start;scrollbar-width:none}
   .store .hdr-actions .acct{display:none}
   .store .logo img{height:calc(var(--logo-h) * .72)}
   .store section.block{padding:48px 0}
@@ -312,6 +312,7 @@ button,select,input{font:inherit;color:inherit}
   .store .hero-splat .wrap{min-height:300px}
   .store .neon-box p{font-size:19px}
   .store .hero-glow .wrap{padding-top:64px;padding-bottom:64px}
+  .store .hero-glow::before{inset:0;opacity:.35;-webkit-mask-image:none;mask-image:none}
   .store .drop-main{min-height:340px;padding:28px}
   .store .drop-side{grid-template-rows:170px}
   .store .card .meta{flex-direction:column;gap:4px;padding:var(--card-pad-sm)}
@@ -319,8 +320,8 @@ button,select,input{font:inherit;color:inherit}
   .store .card .nm{font-size:calc(var(--card-size) * .88)}
   .store .quick{display:none}
   .store .ftr-grid{grid-template-columns:1fr}
-  .store .stats{gap:22px}
-  .store .news form{flex-direction:column;max-width:none}
+    .store .news form{max-width:none}
+  .store .field-row{flex-direction:column}
   .store .promo-inner span:nth-child(n+2){display:none}
   .store[data-promo="marquee"] .promo-inner span{display:inline}
 }
@@ -411,7 +412,7 @@ const P = [
   ['zuyaquii','Zuyaquii','ZQ-35','119/390/Zuyaqui_-_1_New__80692.1789500118.jpg',['Gas','Earthy'],'Zuyaqui stands apart from the sweeter strains in the lineup. It has a deep OG-style funk with woody, earthy and fuel-heavy aromas, plus a subtle creamy sweetness underneath.'],
   ['alien-vortex','Alien Vortex','AV-35','118/388/Alien_Vortex_-_1_New__06162.1789500044.jpg',['Fruit','Gas'],'Alien Vortex has a wild combination of sweet fruit, sour candy and heavy skunky gas. The sweetness comes first, followed by a funky fuel note that gives it much more depth than a typical candy strain.'],
   ['blue-guava','Blue Guava','BG-35','117/386/Blue_Guava_-_1_New__09743.1789499992.jpg',['Fruit'],'Blue Guava is ripe tropical fruit, blueberry sweetness and creamy guava candy. It has that juicy, almost smoothie-like aroma where the fruit smells thick rather than sharp. Tropical, creamy and seriously flavorful.'],
-  ['fire-af','Fire AF','FA-35','116/384/Fire_AF_-_1_New__16938.1789499891.jpg',['Dessert','Gas'],'Fire AF combines sweet Gelato creaminess with fruity candy and heavy fuel. Think creamy candy terps with a gasoline finish — sweet enough for the candy crowd but still loud enough for gas smokers.'],
+  ['fire-af','Fire AF','FA-35','116/384/Fire_AF_-_1_New__16938.1789499891.jpg',['Dessert','Gas'],'Fire AF combines sweet Gelato creaminess with fruity candy and heavy fuel. Think creamy candy terps with a gasoline finish. Sweet enough for the candy crowd but still loud enough for gas smokers.'],
   ['rock-candy','Rock Candy','RC-35','115/382/Rock_Candy_-_1_New__48883.1789499786.jpg',['Candy'],'Rock Candy is exactly the direction the name suggests: hard candy sweetness, sugary fruit and creamy undertones, with a touch of gas underneath to keep it from becoming one-dimensional.'],
   ['nuclear-slurpee','Nuclear Slurpee','NS-35','114/380/Nuclear_Slurpee_-_1_New__51932.1789499700.jpg',['Candy','Gas'],'Nuclear Slurpee is a thick, syrupy candy strain. Sweet fruit punch, melted candy and creamy dessert terps dominate the aroma, followed by a noticeable wave of gas on the back end.'],
   ['gelato-z','Gelato Z','GZ-35','113/378/Grapefruit_Gelato_-_1_New__55907.1789499603.jpg',['Dessert'],'Gelato Z is pure modern dessert flower: creamy Gelato, fruit candy, sugary berries and Z-style sweetness. The aroma is smooth and rich, with almost an ice-cream-and-candy quality.'],
@@ -424,11 +425,12 @@ const money = n => '$' + n.toFixed(2);
    Each theme = token set + layout flags. Tokens map 1:1 to CSS variables on .store
    and to Stencil config keys on export. */
 const FONTS = {
-  'Roboto Condensed':"'Roboto Condensed',sans-serif", 'Roboto':"Roboto,sans-serif", 'Unbounded':"Unbounded,sans-serif", 'Inter':"Inter,sans-serif",
-  'Fraunces':"Fraunces,serif", 'DM Sans':"'DM Sans',sans-serif", 'Instrument Serif':"'Instrument Serif',serif", 'Inter Tight':"'Inter Tight',sans-serif",
+  'Roboto Condensed':"'Roboto Condensed',sans-serif", 'Roboto':"Roboto,sans-serif", 'Unbounded':"Unbounded,sans-serif", 'Geist':"Geist,sans-serif",
+  'Schibsted Grotesk':"'Schibsted Grotesk',sans-serif", 'DM Sans':"'DM Sans',sans-serif", 'EB Garamond':"'EB Garamond',serif", 'Inter Tight':"'Inter Tight',sans-serif",
   'Bricolage Grotesque':"'Bricolage Grotesque',sans-serif", 'Anton':"Anton,sans-serif", 'Space Grotesk':"'Space Grotesk',sans-serif", 'Syne':"Syne,sans-serif", 'Manrope':"Manrope,sans-serif",
 };
-const HEAD_WEIGHT = {'Roboto Condensed':700,'Roboto':700,'Unbounded':700,'Inter':700,'Fraunces':500,'DM Sans':700,'Instrument Serif':400,'Inter Tight':700,'Bricolage Grotesque':800,'Anton':400,'Space Grotesk':700,'Syne':800,'Manrope':800};
+const HEAD_WEIGHT = {'Roboto Condensed':700,'Roboto':700,'Unbounded':700,'Geist':700,'Schibsted Grotesk':800,'DM Sans':700,'EB Garamond':500,'Inter Tight':700,'Bricolage Grotesque':800,'Anton':400,'Space Grotesk':700,'Syne':800,'Manrope':800};
+const SERIF = f => f==='EB Garamond';
 
 const THEMES = {
   original:{name:'Current site',blurb:'Baseline: your live purple / black setup, for reference.',
@@ -436,25 +438,25 @@ const THEMES = {
        header:'#be61a5',headerText:'#ffffff',navBg:'#ffffff',navText:'#333333',promoBg:'#000000',promoText:'#ffffff',
        footer:'#000000',footerText:'#ffffff',imgBg:'#ffffff',band:'#be61a5',bandText:'#ffffff',radius:0,
        head:'Roboto Condensed',body:'Roboto',case:'uppercase',track:'0',cards:'bordered',hero:'splat',header_layout:'classic',promo:'static',cardBg:'#ffffff',cardText:'#000000'}},
-  afterglow:{name:'Afterglow',blurb:'Dark and refined. Neon pulled from your splatter art, used sparingly.',
-    t:{bg:'#0c0b10',surface:'#16141c',text:'#f2eff6',muted:'#9d98a8',heading:'#ffffff',accent:'#ff3ea5',accentInk:'#ffffff',
-       header:'#0c0b10',headerText:'#f2eff6',navBg:'#0c0b10',navText:'#f2eff6',promoBg:'#d8ff3d',promoText:'#0c0b10',
+  afterglow:{name:'Afterglow',blurb:'Dark and refined. Your bear art up front, one hot-pink accent.',
+    t:{bg:'#0c0b10',surface:'#16141c',text:'#f2eff6',muted:'#a19cab',heading:'#f7f5fa',accent:'#ff3ea5',accentInk:'#ffffff',
+       header:'#0c0b10',headerText:'#f2eff6',navBg:'#0c0b10',navText:'#f2eff6',promoBg:'#16141c',promoText:'#f2eff6',
        footer:'#08070b',footerText:'#e8e5ee',imgBg:'#1d1b24',band:'#16141c',bandText:'#f2eff6',radius:14,
-       head:'Unbounded',body:'Inter',case:'uppercase',track:'-0.01em',cards:'lifted',hero:'glow',header_layout:'classic',promo:'marquee',cardBg:'#16141c',cardText:'#f2eff6'}},
-  apothecary:{name:'Candy Apothecary',blurb:'Warm cream paper, forest green, soft serif. Craft and trust-forward.',
-    t:{bg:'#f6f1e9',surface:'#fffcf6',text:'#1f2a24',muted:'#6a716b',heading:'#17231c',accent:'#2f5d46',accentInk:'#fffcf6',
-       header:'#f6f1e9',headerText:'#1f2a24',navBg:'#f6f1e9',navText:'#1f2a24',promoBg:'#2f5d46',promoText:'#f6f1e9',
-       footer:'#17231c',footerText:'#e9e2d4',imgBg:'#ebe3d5',band:'#e8a6c4',bandText:'#17231c',radius:10,
-       head:'Fraunces',body:'DM Sans',case:'none',track:'-0.02em',cards:'flat',hero:'split',header_layout:'centered',promo:'static',cardBg:'#fffcf6',cardText:'#1f2a24'}},
-  gallery:{name:'Gallery',blurb:'Bright white, editorial serif, product photos do the talking.',
-    t:{bg:'#ffffff',surface:'#ffffff',text:'#121212',muted:'#6f6f6f',heading:'#0a0a0a',accent:'#121212',accentInk:'#ffffff',
-       header:'#ffffff',headerText:'#121212',navBg:'#ffffff',navText:'#121212',promoBg:'#be61a5',promoText:'#ffffff',
-       footer:'#ffffff',footerText:'#121212',imgBg:'#f3f2f0',band:'#f3f2f0',bandText:'#121212',radius:2,
-       head:'Instrument Serif',body:'Inter Tight',case:'none',track:'-0.01em',cards:'flat',hero:'type',header_layout:'centered',promo:'static',cardBg:'#ffffff',cardText:'#121212'}},
-  blueridge:{name:'Blue Ridge Night',blurb:'Asheville after dark: slate, moss and a sunset-orange accent.',
-    t:{bg:'#111a21',surface:'#18242d',text:'#e6ebe8',muted:'#93a39d',heading:'#f4f1ea',accent:'#f2873a',accentInk:'#111a21',
-       header:'#111a21',headerText:'#e6ebe8',navBg:'#18242d',navText:'#e6ebe8',promoBg:'#7fb48a',promoText:'#111a21',
-       footer:'#0b1217',footerText:'#d6ddd9',imgBg:'#1f2e38',band:'#7fb48a',bandText:'#111a21',radius:18,
+       head:'Unbounded',body:'Geist',case:'uppercase',track:'-0.01em',cards:'lifted',hero:'glow',header_layout:'classic',promo:'marquee',cardBg:'#16141c',cardText:'#f2eff6'}},
+  apothecary:{name:'Forest',blurb:'Cool bone, deep forest green, tight grotesk. Calm and trust-forward.',
+    t:{bg:'#eceee8',surface:'#f6f7f3',text:'#13201a',muted:'#56635b',heading:'#0f1a14',accent:'#235c41',accentInk:'#f6f7f3',
+       header:'#eceee8',headerText:'#13201a',navBg:'#eceee8',navText:'#13201a',promoBg:'#13201a',promoText:'#e3e8e1',
+       footer:'#13201a',footerText:'#dfe5dd',imgBg:'#dfe3da',band:'#13201a',bandText:'#eceee8',radius:10,
+       head:'Schibsted Grotesk',body:'Geist',case:'none',track:'-0.035em',cards:'flat',hero:'split',header_layout:'centered',promo:'static',cardBg:'#f6f7f3',cardText:'#13201a'}},
+  gallery:{name:'Gallery',blurb:'Bright and editorial. Garamond headlines, photos do the talking.',
+    t:{bg:'#fbfbfa',surface:'#fbfbfa',text:'#141414',muted:'#646464',heading:'#0e0e0e',accent:'#141414',accentInk:'#fbfbfa',
+       header:'#fbfbfa',headerText:'#141414',navBg:'#fbfbfa',navText:'#141414',promoBg:'#141414',promoText:'#fbfbfa',
+       footer:'#fbfbfa',footerText:'#141414',imgBg:'#f0efed',band:'#f0efed',bandText:'#141414',radius:2,
+       head:'EB Garamond',body:'Inter Tight',case:'none',track:'-0.02em',cards:'flat',hero:'type',header_layout:'centered',promo:'static',cardBg:'#fbfbfa',cardText:'#141414'}},
+  blueridge:{name:'Blue Ridge Night',blurb:'Asheville after dark: deep slate with a sunset-orange accent.',
+    t:{bg:'#111a21',surface:'#18242d',text:'#e6ebe8',muted:'#97a6a0',heading:'#f4f1ea',accent:'#f2873a',accentInk:'#111a21',
+       header:'#111a21',headerText:'#e6ebe8',navBg:'#18242d',navText:'#e6ebe8',promoBg:'#f2873a',promoText:'#111a21',
+       footer:'#0b1217',footerText:'#d6ddd9',imgBg:'#1f2e38',band:'#1a2832',bandText:'#e6ebe8',radius:18,
        head:'Bricolage Grotesque',body:'Bricolage Grotesque',case:'none',track:'-0.03em',cards:'lifted',hero:'split',header_layout:'classic',promo:'static',cardBg:'#18242d',cardText:'#e6ebe8'}},
   drop:{name:'Drop Culture',blurb:'Streetwear-drop energy: bone white, black rules, acid lime, condensed caps.',
     t:{bg:'#efeee8',surface:'#ffffff',text:'#0a0a0a',muted:'#5c5c58',heading:'#0a0a0a',accent:'#c8ff1a',accentInk:'#0a0a0a',
@@ -462,10 +464,10 @@ const THEMES = {
        footer:'#0a0a0a',footerText:'#efeee8',imgBg:'#ffffff',band:'#0a0a0a',bandText:'#efeee8',radius:0,
        head:'Anton',body:'Space Grotesk',case:'uppercase',track:'0.005em',cards:'bordered',hero:'drop',header_layout:'classic',promo:'marquee',cardBg:'#ffffff',cardText:'#0a0a0a'}},
   bubblegum:{name:'Grape Soda',blurb:'Your purple, evolved: softer surfaces, deep plum ink, rounded and playful.',
-    t:{bg:'#fbf5fa',surface:'#ffffff',text:'#2b1631',muted:'#7d6a81',heading:'#2b1631',accent:'#a5408f',accentInk:'#ffffff',
-       header:'#be61a5',headerText:'#ffffff',navBg:'#ffffff',navText:'#2b1631',promoBg:'#2b1631',promoText:'#ffd9f1',
+    t:{bg:'#fbf5fa',surface:'#fffcfe',text:'#2b1631',muted:'#75627a',heading:'#2b1631',accent:'#a5408f',accentInk:'#fffcfe',
+       header:'#be61a5',headerText:'#fffcfe',navBg:'#fffcfe',navText:'#2b1631',promoBg:'#2b1631',promoText:'#ffd9f1',
        footer:'#2b1631',footerText:'#f3e6f0',imgBg:'#f3e7f0',band:'#2b1631',bandText:'#fbf5fa',radius:22,
-       head:'Syne',body:'Manrope',case:'none',track:'-0.02em',cards:'lifted',hero:'art',header_layout:'classic',promo:'static',cardBg:'#ffffff',cardText:'#2b1631'}},
+       head:'Syne',body:'Manrope',case:'none',track:'-0.02em',cards:'lifted',hero:'art',header_layout:'classic',promo:'static',cardBg:'#fffcfe',cardText:'#2b1631'}},
 };
 
 /* ───────────── Color helpers ───────────── */
@@ -479,6 +481,9 @@ const contrast = (a,b) => { const [x,y]=[lum(a),lum(b)].sort((m,n)=>n-m); return
 /* resolve a theme + user tweaks into the full token set */
 function resolve(key){
   const t = {...THEMES[key].t, ...(state.tweaks[key]||{})};
+  // tweaks saved before a font was retired fall back to the theme's own font
+  if(!FONTS[t.head]) t.head = THEMES[key].t.head;
+  if(!FONTS[t.body]) t.body = THEMES[key].t.body;
   const dark = isDark(t.bg);
   // when header colour is tweaked, keep header text legible
   const headerText = (state.tweaks[key]||{}).header ? (isDark(t.header) ? '#ffffff' : '#111111') : t.headerText;
@@ -505,7 +510,7 @@ function cssVars(r,key=state.current){
     '--accent':r.accent,'--accent-ink':r.accentInk,'--accent-strong':r.accentStrong,'--accent-soft':mix(r.bg,r.accent,r.dark?.18:.12),
     '--border':r.border,'--border-strong':r.borderStrong,
     '--header-bg':r.header,'--header-text':r.headerText,'--header-muted':mix(r.header,r.headerText,.6),'--header-line':sameHeaderAsBg?r.border:'transparent',
-    '--search-bg':isDark(r.header)?mix(r.header,'#ffffff',.07):'#ffffff','--search-line':isDark(r.header)?mix(r.header,'#ffffff',.14):mix(r.header,'#000000',.12),
+    '--search-bg':isDark(r.header)?mix(r.header,'#ffffff',.07):mix(r.header,'#ffffff',.6),'--search-line':isDark(r.header)?mix(r.header,'#ffffff',.14):mix(r.header,'#000000',.12),
     '--cart-bg':isDark(r.header)?mix(r.header,'#ffffff',.08):mix(r.header,'#000000',.06),'--cart-text':r.headerText,
     '--nav-bg':r.navBg,'--nav-text':r.navText,'--nav-align':r.header_layout==='centered'||isOrig?'center':'flex-start',
     '--promo-bg':r.promoBg,'--promo-text':r.promoText,
@@ -513,15 +518,14 @@ function cssVars(r,key=state.current){
     '--footer-bg':r.footer,'--footer-text':r.footerText,'--footer-head':mix(r.footer,r.footerText,.6),'--footer-line':mix(r.footer,r.footerText,.15),
     '--band-bg':r.band,'--band-text':r.bandText,'--band-line':mix(r.band,r.bandText,.25),
     '--img-bg':r.imgBg,'--card-bg':r.cardBg,'--input-bg':r.surface,
-    '--tag-bg':r.dark?'rgba(12,11,16,.72)':'rgba(255,255,255,.88)','--tag-text':r.dark?'#ffffff':r.text,
+    /* shape rule: radius >= 14 means pill buttons/chips + rounded cards; below that, everything shares the card radius */
     '--radius':r.radius+'px','--btn-radius':(r.radius>=14?999:r.radius)+'px',
     '--btn-case':r.case==='uppercase'||r.head==='Anton'?'uppercase':'none','--btn-track':r.case==='uppercase'?'.08em':'0',
     '--font-head':FONTS[r.head],'--font-body':FONTS[r.body],'--head-weight':HEAD_WEIGHT[r.head],'--head-case':r.case,'--head-track':r.track,
-    '--card-font':r.head==='Instrument Serif'||r.head==='Fraunces'?FONTS[r.head]:FONTS[r.body],
-    '--card-weight':r.head==='Instrument Serif'?400:r.head==='Fraunces'?500:r.head==='Anton'?400:700,
+    '--card-font':SERIF(r.head)?FONTS[r.head]:FONTS[r.body],
+    '--card-weight':SERIF(r.head)?500:r.head==='Anton'?400:700,
     '--card-case':r.case,'--card-track':r.case==='uppercase'?'.02em':'-0.005em',
-    '--card-size':r.head==='Instrument Serif'?'22px':r.head==='Anton'?'20px':r.head==='Fraunces'?'19px':'15.5px',
-    '--card-font-family':FONTS[r.head],
+    '--card-size':SERIF(r.head)?'21px':r.head==='Anton'?'20px':'15.5px',
     '--card-border':r.cards==='bordered'?`1.5px solid ${r.head==='Anton'?r.text:r.border}`:'1px solid '+r.border,
     '--card-pad':'14px 16px 16px','--card-pad-sm':'10px 12px 12px',
     '--card-shadow':r.dark?'0 1px 0 rgba(255,255,255,.04) inset, 0 10px 30px rgba(0,0,0,.35)':'0 1px 2px rgba(20,10,30,.06), 0 8px 24px rgba(20,10,30,.07)',
@@ -539,27 +543,21 @@ if(!THEMES[state.current]) state.current='afterglow';
 const save = () => { try{ localStorage.setItem('ar-theme-lab', JSON.stringify(state)); }catch(e){} };
 
 /* ───────────── Store markup ───────────── */
-const ico = {
-  search:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
-  user:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
-  bag:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 13H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
-  lab:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/></svg>',
-  truck:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',
-  stack:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>',
-  doc:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>',
-};
+/* Icons: Phosphor (regular weight), loaded from @phosphor-icons/web */
+const ico = n => `<i class="ph ph-${n}" aria-hidden="true"></i>`;
+const TAGLINE = 'Premium THCa flower';
 
 function header(r){
   return `
   <div class="promo"><div class="promo-inner">${
-    (()=>{const items=['Buy 4+ products, save 15%','Buy 8+ products, save 25%','Free shipping over $100','Lab tested · COA on every strain'];
+    (()=>{const items=['Buy 4+ products, save 15%','Buy 8+ products, save 25%','Free shipping over $100','COA on every strain'];
       return (r.promo==='marquee'?[...items,...items,...items,...items]:items).map(s=>`<span>${s}</span>`).join('')})()
   }</div></div>
   <header class="hdr"><div class="wrap hdr-row">
     <a class="logo" data-go="home"><img src="${LOGO}" alt="Adrenaline Rush"></a>
-    <div class="search">${ico.search}<span>Search strains, terps, COAs…</span></div>
-    <div class="hdr-actions"><a class="acct">${ico.user}Sign in</a>
-      <a class="cart-pill">${ico.bag}Cart <i>${state.cart}</i></a></div>
+    <div class="search">${ico('magnifying-glass')}<span>Search strains</span></div>
+    <div class="hdr-actions"><a class="acct">${ico('user')}Sign in</a>
+      <a class="cart-pill">${ico('handbag')}Cart <i>${state.cart}</i></a></div>
   </div></header>
   <nav class="nav"><div class="wrap"><ul style="padding-left:0">
     ${[['Shop flower','shop'],['Bundles','home'],['Lab results','product'],['About','home'],['Contact','home']].map(([l,g],i)=>`<li><a data-go="${g}" class="${(state.page==='shop'&&i===0)?'on':''}">${l}</a></li>`).join('')}
@@ -569,70 +567,63 @@ function header(r){
 function card(p){
   return `<article class="card" data-prod="${p.slug}">
     <div class="img"><img loading="lazy" src="${img(p)}" alt="${p.name}">
-      <div class="badge">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
       <div class="quick"><button class="btn-p" data-add="${p.slug}">Add to cart</button></div></div>
-    <div class="meta"><div><div class="nm">${p.name}</div><div class="br">Adrenaline Rush · 3.5g</div></div><div class="pr">${money(p.price)}</div></div>
+    <div class="meta"><div><div class="nm">${p.name}</div><div class="br">${p.tags.join(' / ')}</div></div><div class="pr">${money(p.price)}</div></div>
   </article>`;
 }
 
+/* Every hero: max 4 text elements, headline <= 2 lines, one primary CTA with the shared "Shop flower" label */
 function hero(r){
   const pick = ['watermelon-z','blue-guava','fire-af'].map(s=>P.find(p=>p.slug===s));
   switch(r.hero){
     case 'splat': return `<section class="hero hero-splat"><div class="wrap"><div class="neon-box">
       <p>Buy 4+ Products Save 15%</p><p>Buy 8+ Products Save 25%</p><p>Free Shipping Over $100</p></div></div></section>`;
     case 'glow': return `<section class="hero hero-glow"><div class="wrap"><div class="hero-copy">
-      <div class="eyebrow" style="color:var(--accent-strong);margin-bottom:18px">New drop · 13 strains</div>
-      <h1 class="h">Loud terps.<br>Clean lab results.</h1>
-      <p>Small-batch flower out of Asheville, NC. Every strain ships with its certificate of analysis.</p>
+      <div class="eyebrow" style="color:var(--accent-strong);margin-bottom:18px">${TAGLINE}</div>
+      <h1 class="h">Loud terps. Clean lab results.</h1>
+      <p>Thirteen strains from Asheville, NC, each with its certificate of analysis.</p>
       <div class="hero-ctas"><a class="btn-p" data-go="shop">Shop flower</a><a class="btn-s" data-go="home">Build a bundle</a></div></div></div></section>`;
     case 'split': return `<section class="hero hero-split"><div class="wrap"><div class="hero-copy">
-      <div class="eyebrow" style="margin-bottom:16px">Asheville, North Carolina</div>
-      <h1 class="h">Candy, cream &amp; gas. Pick your flavor.</h1>
+      <h1 class="h">Candy, cream or gas. Pick your flavor.</h1>
       <p>Thirteen strains sorted by what they actually smell like, with lab results one click away.</p>
-      <div class="hero-ctas"><a class="btn-p" data-go="shop">Shop the lineup</a><a class="btn-s" data-go="home">Bundle &amp; save 25%</a></div></div>
+      <div class="hero-ctas"><a class="btn-p" data-go="shop">Shop flower</a><a class="btn-s" data-go="home">Build a bundle</a></div></div>
       <div class="collage">${pick.map(p=>`<img src="${img(p,'760x760')}" alt="${p.name}">`).join('')}</div></div></section>`;
     case 'type': return `<section class="hero hero-type"><div class="wrap">
-      <div class="eyebrow" style="margin-bottom:22px">The Adrenaline Rush lineup</div>
-      <h1 class="h">Flower with<br><em style="font-style:italic;color:var(--accent-strong)">a pulse.</em></h1>
-      <div class="row2"><p>Thirteen small-batch strains from Asheville, NC. Mix any four and save 15%, any eight and save 25%.</p>
-      <a class="btn-p" data-go="shop">Shop all flower</a></div></div></section>`;
+      <h1 class="h">Flower with a pulse.</h1>
+      <div class="row2"><p>Thirteen strains from Asheville, NC. Mix any four and save 15%, any eight and save 25%.</p>
+      <a class="btn-p" data-go="shop">Shop flower</a></div></div></section>`;
     case 'art': return `<section class="hero hero-art"><div class="wrap"><div class="art-frame"><div class="art-copy">
-      <div class="eyebrow" style="color:#fff;opacity:.75;margin-bottom:14px">Premium THCa hemp flower</div>
+      <div class="eyebrow" style="color:#f7f5f8;opacity:.8;margin-bottom:14px">${TAGLINE}</div>
       <h1 class="h">Thirteen strains. One loud lineup.</h1>
       <p>Mix any four and save 15%. Any eight, save 25%.</p>
       <a class="btn-p" data-go="shop">Shop flower</a></div></div></div></section>`;
     case 'drop': return `<section class="hero hero-drop"><div class="wrap">
-      <div class="drop-main"><div class="eyebrow" style="color:inherit;opacity:.7">Drop 013 · Live now</div>
-        <div><h1 class="h">Mix 8.<br>Save 25.</h1><p>Any eight strains, 25% off, free shipping. Lab results on every jar.</p><a class="btn-p" data-go="shop">Shop the drop →</a></div></div>
-      <div class="drop-side">${pick.slice(0,2).map(p=>`<figure data-prod="${p.slug}" style="cursor:pointer"><img src="${img(p,'760x760')}" alt="${p.name}"><figcaption>${p.name}</figcaption></figure>`).join('')}</div>
+      <div class="drop-main">
+        <div><h1 class="h">Mix 8.<br>Save 25.</h1><p>Any eight strains, 25% off, free shipping. Lab results on every jar.</p><a class="btn-p" data-go="shop">Shop flower</a></div></div>
+      <div class="drop-side">${pick.slice(0,2).map(p=>`<figure data-prod="${p.slug}"><div class="fimg"><img src="${img(p,'760x760')}" alt="${p.name}"></div><figcaption>${p.name}</figcaption></figure>`).join('')}</div>
       </div></section>`;
   }
 }
 
 function homePage(r){
   return `${hero(r)}
-  <div class="values"><div class="wrap">
-    <div class="val"><div class="ic">${ico.lab}</div><div><b>Lab tested</b><span>COA published for every strain</span></div></div>
-    <div class="val"><div class="ic">${ico.stack}</div><div><b>Mix &amp; match bundles</b><span>4+ save 15% · 8+ save 25%</span></div></div>
-    <div class="val"><div class="ic">${ico.truck}</div><div><b>Free shipping</b><span>On orders over $100</span></div></div>
-  </div></div>
   <section class="block"><div class="wrap">
-    <div class="sec-head"><div><div class="eyebrow" style="margin-bottom:10px">Featured flower</div><h2 class="h">The lineup</h2></div><a class="link-u" data-go="shop">View all 13</a></div>
+    <div class="sec-head"><h2 class="h">The lineup</h2><a class="link-u" data-go="shop">Shop flower</a></div>
     <div class="grid">${P.slice(0,8).map(card).join('')}</div>
   </div></section>
   <section class="bundle"><div class="wrap">
-    <div><div class="eyebrow" style="color:inherit;opacity:.7;margin-bottom:14px">Bundle pricing</div><h2 class="h">The more you mix, the more you save.</h2>
+    <div><h2 class="h">The more you mix, the more you save.</h2>
       <p>Discounts apply automatically at checkout. Mix any strains you like.</p></div>
     <div class="tiers">
-      <div class="tier"><div class="q">1–3 items</div><div class="big">${money(34.99)}</div><div class="each">per item</div></div>
-      <div class="tier"><div class="q">4–7 items</div><div class="big">−15%</div><div class="each">${money(34.99*.85)} each</div></div>
-      <div class="tier hot"><div class="q">8+ items</div><div class="big">−25%</div><div class="each">${money(34.99*.75)} each</div></div>
+      <div class="tier"><div class="q">1-3 items</div><div class="big">${money(34.99)}</div><div class="each">per item</div></div>
+      <div class="tier"><div class="q">4-7 items</div><div class="big">15% off</div><div class="each">${money(34.99*.85)} each</div></div>
+      <div class="tier hot"><div class="q">8+ items</div><div class="big">25% off</div><div class="each">${money(34.99*.75)} each</div></div>
     </div></div></section>
   <section class="block story"><div class="wrap">
     <div class="story-img">${['cherry-tarts','petro-chem'].map(s=>`<img src="${img(P.find(p=>p.slug===s),'760x760')}" alt="">`).join('')}</div>
-    <div><div class="eyebrow" style="margin-bottom:12px">From Asheville, NC</div><h2 class="h">Named for the smell. Sorted by the terps.</h2>
-      <p>From candy-forward Runtz crosses to straight-fuel gas, every strain in the lineup is described by what you’ll actually get when you crack the jar, and backed by a published certificate of analysis.</p>
-      <div class="stats"><div><b>13</b><span>strains in stock</span></div><div><b>100%</b><span>with published COAs</span></div><div><b>$100</b><span>free-ship threshold</span></div></div></div>
+    <div><h2 class="h">Named for the smell. Sorted by the terps.</h2>
+      <p>From candy-forward Runtz crosses to straight-fuel gas, every strain is described by what you get when you open the jar.</p>
+      <a class="btn-s" data-go="product" style="margin-top:26px">View lab results</a></div>
   </div></section>`;
 }
 
@@ -641,7 +632,7 @@ function shopPage(r){
   const list = state.filter==='All'?P:P.filter(p=>p.tags.includes(state.filter));
   return `<div class="wrap">
     <div class="crumbs"><a data-go="home">Home</a> / Flower</div>
-    <div class="cat-head"><div><h1 class="h">Flower</h1><p>Thirteen small-batch strains. Filter by flavor family and mix any four or more to save.</p></div><div class="sort">${list.length} products</div></div>
+    <div class="cat-head"><div><h1 class="h">Flower</h1><p>Filter by flavor family. Mix any four or more strains to save.</p></div><div class="sort">${list.length} products</div></div>
     <div class="toolbar"><div class="chips">${tags.map(t=>`<button class="chip ${state.filter===t?'on':''}" data-filter="${t}">${t}</button>`).join('')}</div>
       <label class="sort">Sort<select><option>Featured</option><option>Newest</option><option>A to Z</option><option>Price</option></select></label></div>
     <div class="grid" style="margin-bottom:80px">${list.map(card).join('')}</div>
@@ -654,35 +645,33 @@ function productPage(r){
   return `<div class="wrap">
     <div class="crumbs"><a data-go="home">Home</a> / <a data-go="shop">Flower</a> / ${p.name}</div>
     <div class="pdp">
-      <div class="gallery"><div class="main"><img src="${img(p,'760x760')}" alt="${p.name}"></div>
-</div>
+      <div class="gallery"><div class="main"><img src="${img(p,'760x760')}" alt="${p.name}"></div></div>
       <div class="pinfo">
-        <div class="eyebrow" style="margin-bottom:12px">Adrenaline Rush · Flower</div>
         <h1 class="h">${p.name}</h1>
-        <div class="sku">SKU ${p.sku} · 3.5g</div>
+        <div class="sku">Adrenaline Rush, SKU ${p.sku}</div>
         <div class="tag-row">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>
         <div class="pprice"><b>${money(p.price)}</b><span class="sort">or ${money(p.price*.75)} each in an 8+ bundle</span></div>
         <div class="tier-table">
-          <div class="on"><span>1–3 items</span><span>${money(34.99)}</span><em>Current</em></div>
-          <div><span>4–7 items</span><span>${money(34.99*.85)}</span><em>Save 15%</em></div>
+          <div class="on"><span>1-3 items</span><span>${money(34.99)}</span><em>Current</em></div>
+          <div><span>4-7 items</span><span>${money(34.99*.85)}</span><em>Save 15%</em></div>
           <div><span>8+ items</span><span>${money(34.99*.75)}</span><em>Save 25%</em></div>
         </div>
-        <div class="buy"><div class="qty"><button data-q="-1">−</button><span id="qn">1</span><button data-q="1">+</button></div><button class="btn-p" data-add="${p.slug}">Add to cart</button></div>
-        <div class="pdesc"><h4>Aroma &amp; flavor</h4><p>${p.desc}</p><a class="coa">${ico.doc}View certificate of analysis</a></div>
+        <div class="buy"><div class="qty"><button data-q="-1" aria-label="Decrease quantity">${ico('minus')}</button><span id="qn">1</span><button data-q="1" aria-label="Increase quantity">${ico('plus')}</button></div><button class="btn-p" data-add="${p.slug}">Add to cart</button></div>
+        <div class="pdesc"><h4>Aroma and flavor</h4><p>${p.desc}</p><a class="coa">${ico('file-text')}View certificate of analysis</a></div>
       </div>
     </div>
-    <div class="sec-head"><h2 class="h" style="font-size:clamp(26px,3.4cqi,38px)">Similar terps</h2><a class="link-u" data-go="shop">All flower</a></div>
+    <div class="sec-head"><h2 class="h" style="font-size:clamp(26px,3.4cqi,38px)">Similar terps</h2><a class="link-u" data-go="shop">Shop flower</a></div>
     <div class="grid" style="margin-bottom:80px">${related.map(card).join('')}</div>
   </div>`;
 }
 
 function footer(){
-  return `<section class="news"><div class="wrap"><h3 class="h">First dibs on new drops.</h3>
-    <form onsubmit="return false"><input placeholder="Email address" aria-label="Email address"><button class="btn-p">Subscribe</button></form></div></section>
+  return `<section class="news"><div class="wrap"><h3 class="h">First dibs on new strains.</h3>
+    <form onsubmit="return false"><div class="field"><label for="nl-email">Email address</label><div class="field-row"><input id="nl-email" type="email" autocomplete="email"><button class="btn-p">Subscribe</button></div></div></form></div></section>
   <footer class="ftr"><div class="wrap">
     <div class="ftr-grid">
       <div><img src="${LOGO}" class="ftr-logo" alt="Adrenaline Rush" style="height:64px;width:auto"><div class="addr">Adrenaline Rush<br>PO Box 850, Asheville NC 28801<br>770-605-5405</div></div>
-      <div><h5>Shop</h5><ul><li>Flower</li><li>Bundles</li><li>New drops</li></ul></div>
+      <div><h5>Shop</h5><ul><li>Flower</li><li>Bundles</li></ul></div>
       <div><h5>Info</h5><ul><li>About us</li><li>Certificate of analysis</li><li>Shipping policy</li><li>Contact</li></ul></div>
       <div><h5>Legal</h5><ul><li>Cookie policy</li><li>Sitemap</li><li>Blog</li></ul></div>
     </div>

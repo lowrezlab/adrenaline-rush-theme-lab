@@ -391,7 +391,7 @@ button,select,input{font:inherit;color:inherit}
     <div class="modal-head"><h2 id="mTitle">Export</h2><button class="icon-btn" id="copyBtn">Copy</button><button class="icon-btn" id="closeBtn">Close</button></div>
     <div class="modal-body">
       <div class="tabsx" id="exTabs">
-        <button data-v="steps">How to install</button><button data-v="css">custom.css</button><button data-v="config">config.json</button><button data-v="vars">CSS variables</button>
+        <button data-v="steps">How to install</button><button data-v="css">custom.css</button><button data-v="promo">promo bar HTML</button><button data-v="config">config.json</button><button data-v="vars">CSS variables</button>
       </div>
       <p id="exNote"></p>
       <pre id="exOut"></pre>
@@ -784,6 +784,74 @@ applyScheme();
    Verified 2026-10-13 in a sandbox: setting keys against Cornerstone's config.json/schema.json,
    CSS compiled with Stencil CLI 10's compiler (node-sass + dart-sass), and the CSS rendered
    on saved copies of adrenalinerush.shop's live home, category, product and cart pages. */
+/* Scrolling promo bar: tested in a local Stencil build of the store's Roots 5.2.2 theme. */
+const PROMO_HTML = `<!-- Scrolling promo bar (Adrenaline Rush Theme Lab). Edit the offers in BOTH lists below. -->
+<div class="lab-promo" role="region" aria-label="Store offers" data-lab-promo>
+    <div class="lab-promo-viewport">
+        <div class="lab-promo-track">
+            <ul class="lab-promo-items">
+                <li>Buy 4+ products, save 15%</li>
+                <li>Buy 8+ products, save 25%</li>
+                <li>Free shipping over $100</li>
+                <li>COA on every strain</li>
+            </ul>
+            <ul class="lab-promo-items" aria-hidden="true">
+                <li>Buy 4+ products, save 15%</li>
+                <li>Buy 8+ products, save 25%</li>
+                <li>Free shipping over $100</li>
+                <li>COA on every strain</li>
+            </ul>
+        </div>
+    </div>
+    <button type="button" class="lab-promo-toggle" aria-pressed="false" aria-label="Pause scrolling offers"><span aria-hidden="true">&#10074;&#10074;</span></button>
+</div>
+\x3Cscript>
+    (function () {
+        var bar = document.querySelector('[data-lab-promo]');
+        var btn = bar && bar.querySelector('.lab-promo-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            var paused = !bar.classList.contains('is-paused');
+            bar.classList.toggle('is-paused', paused);
+            btn.setAttribute('aria-pressed', String(paused));
+            btn.setAttribute('aria-label', paused ? 'Play scrolling offers' : 'Pause scrolling offers');
+            btn.firstChild.innerHTML = paused ? '&#9654;' : '&#10074;&#10074;';
+        });
+    })();
+\x3C/script>
+`;
+const PROMO_CSS = `
+/* ===== Part 3: scrolling promo bar =====
+   Needs the promo bar markup added to templates/layout/base.html, above the header. */
+:root{ --promo-h: 36px; }
+.lab-promo{ position:fixed; top:0; left:0; right:0; z-index:101; display:flex; align-items:stretch; height:var(--promo-h); background:var(--promo-bg); color:var(--promo-text); font:600 12.5px/1 var(--font-body); letter-spacing:.04em; overflow:hidden; }
+.lab-promo-viewport{ flex:1; min-width:0; overflow:hidden; }
+.lab-promo-track{ display:flex; width:max-content; height:100%; animation:lab-promo-scroll 32s linear infinite; }
+.lab-promo-items{ display:flex; align-items:center; justify-content:space-around; min-width:100vw; margin:0; padding:0; list-style:none; }
+.lab-promo-items li{ padding:0 22px; white-space:nowrap; }
+.lab-promo-items li:before{ content:"\\2726"; margin-right:22px; opacity:.6; }
+.lab-promo:hover .lab-promo-track,.lab-promo:focus-within .lab-promo-track,.lab-promo.is-paused .lab-promo-track{ animation-play-state:paused; }
+.lab-promo-toggle{ flex:none; width:40px; border:0; padding:0; background:var(--promo-bg); color:inherit; font-size:11px; cursor:pointer; box-shadow:inset 1px 0 0 rgba(128,128,128,.35); }
+.lab-promo-toggle:focus-visible{ outline:2px solid currentColor; outline-offset:-4px; }
+@keyframes lab-promo-scroll{ to{ transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce){
+  .lab-promo-track{ animation:none; }
+  .lab-promo-items[aria-hidden="true"],.lab-promo-toggle{ display:none; }
+  .lab-promo-viewport{ overflow-x:auto; }
+}
+/* Your theme pins the header to the top (on phones and desktop) and sets the page offset with
+   JavaScript. Pin the bar above the header, move the header down, and add the bar's height on top. */
+html body .header{ top:var(--promo-h); }
+html body{ margin-top:var(--promo-h); }
+html body .header.is-open{ height:calc(100vh - var(--promo-h))!important; height:calc(100dvh - var(--promo-h))!important; }  /* open mobile menu fits under the bar */
+`;
+const PROMO_STATIC_CSS = `/* This theme uses a still promo bar instead of a scrolling one. */
+.lab-promo-track{ animation:none; width:100%; }
+.lab-promo-items{ min-width:0; width:100%; justify-content:center; }
+.lab-promo-items[aria-hidden="true"],.lab-promo-toggle{ display:none; }
+.lab-promo-items li:first-child:before{ display:none; }
+.lab-promo-viewport{ overflow-x:auto; }
+`;
 const gfont = (f,w) => `Google_${f.replace(/ /g,'+')}_${w}`;
 const TESTED = '2026-10-13';
 function exportData(){
@@ -895,7 +963,8 @@ html body .footer-newsletter .form-input,html body .form-select{ background-colo
 /* Page Builder blocks on the homepage have black backgrounds set in Page Builder.
    This clears those colors so the theme background shows (image blocks are unaffected). */
 html body [data-sub-layout-container],html body [data-sub-layout],html body .pbw-heading{ background-color:transparent!important; }
-`;
+${PROMO_CSS}${r.promo==='marquee' ? '' : PROMO_STATIC_CSS}`;
+  const promoHtml = PROMO_HTML;
   const vars = `:root{\n${Object.entries(v).map(([n,val])=>`  ${n}: ${val};`).join('\n')}\n}`;
   const name = THEMES[k].name;
   const steps = `Installing the "${name}" theme on adrenalinerush.shop
@@ -927,12 +996,19 @@ PART A: IN THE CONTROL PANEL (no software needed)
    theme only loads files that theme.scss imports.
    If theme.scss is greyed out (read-only) or not listed, use Part B instead.
 
-5. Click "Save File". BigCommerce rebuilds the theme, which can take a few minutes.
+   Add the promo bar across the top:
+   Open templates › layout › base.html and find this line:
+       {{> components/common/header }}
+   Click at the start of that line and paste everything from the "promo bar HTML" tab,
+   so the bar sits directly above it. To change the offers later, edit both lists in it.
+
+5. Click "Save All Files". BigCommerce rebuilds the theme, which can take a few minutes.
 
 6. Preview the copy.
    Back in Storefront › Themes, open the ⋯ menu on "${name} test" and choose "Customize".
    Page Builder opens on the copy's homepage.
-   - Check: header, homepage banners and blocks, a category page, a product page, the cart.
+   - Check: promo bar, header, homepage banners and blocks, a category page, a product
+     page, the cart. On a phone, open the menu too.
    - Switch to Preview mode to click through to other pages.
    - Use the device icons at the top to check tablet and phone.
    - If you change anything here, click "Save". Do NOT click "Publish" yet:
@@ -983,6 +1059,8 @@ Requires Node.js 24 or newer (Stencil CLI 10 needs it).
 4. Add the CSS: create assets/scss/_lab-theme.scss and paste the "custom.css" tab into it.
    Then add this as the very last line of assets/scss/theme.scss:
      @import "lab-theme";
+   Add the promo bar: in templates/layout/base.html, paste the "promo bar HTML" tab
+   directly above the line {{> components/common/header }}.
 
 5. Optional, config.json: only copy keys from the "config.json" tab that already exist in
    your theme's config.json. If config.json has a "variations" list, put them in the
@@ -1000,10 +1078,10 @@ Requires Node.js 24 or newer (Stencil CLI 10 needs it).
    and go live with Part A, steps 6-8.
    Your store can hold 20 themes. If you're at the limit, push asks you to pick themes to
    delete and deletes them immediately, so remove an unused theme first.`;
-  return {config: JSON.stringify(config,null,2), css, vars, steps};
+  return {config: JSON.stringify(config,null,2), css, vars, steps, promo: promoHtml};
 }
 let exTab='steps';
-const exNotes={config:'Theme setting values, for a developer using Stencil CLI (Part B, step 5). The control panel cannot edit config.json.',css:'Paste at the very end of assets/scss/theme.scss (Part A, step 4). Includes the fonts, so Theme Styles needs no changes.',vars:'Raw design tokens for this theme, including your tweaks.',steps:'Tested install steps. Your live store does not change until you publish.'};
+const exNotes={config:'Theme setting values, for a developer using Stencil CLI (Part B, step 5). The control panel cannot edit config.json.',css:'Paste at the very end of assets/scss/theme.scss (Part A, step 4). Includes the fonts, so Theme Styles needs no changes.',vars:'Raw design tokens for this theme, including your tweaks.',promo:'Paste into templates/layout/base.html, directly above {{> components/common/header }} (Part A, step 4).',steps:'Tested install steps. Your live store does not change until you publish.'};
 function showEx(){ const d=exportData(); $('exOut').textContent=d[exTab]; $('exNote').textContent=exNotes[exTab]; $('exTabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===exTab)); $('mTitle').textContent='Export · '+THEMES[state.current].name; }
 $('exportBtn').onclick=()=>{showEx(); $('modal').classList.add('open');};
 $('exTabs').onclick=e=>{const b=e.target.closest('button'); if(b){exTab=b.dataset.v; showEx();}};

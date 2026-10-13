@@ -36,3 +36,13 @@ following Part B, with the Afterglow CSS added as `_lab-theme.scss` and imported
 - Found and fixed in the steps: `stencil init` fails on downloaded themes ("No package manager auto-detected") because they have no lockfile. Part B now uses `--skipInstall` and a separate `npm install`, which was tested.
 
 Still untested: the control-panel route (Part A) and uploading with `stencil push`. Nothing was uploaded.
+
+## Scrolling promo bar (added 2026-10-13)
+
+Tested in the same local build of the store's Roots 5.2.2 theme:
+
+- Markup pasted above `{{> components/common/header }}` in `templates/layout/base.html`; CSS is Part 3 of the custom.css export.
+- Roots pins the header to the top on phones and desktop and sets the page offset with JavaScript. The bar is pinned above it and the header and page move down by the bar's height. Checked on desktop and phone, after the header shrinks on scroll, and with the phone menu open.
+- Pause button stops and restarts the scroll and updates its screen-reader label. Scrolling also pauses on hover and keyboard focus, and is off when the device asks for reduced motion (CSS rule present; not emulated in the test browser).
+- Afterglow and Drop Culture scroll; the other themes get a still, centered bar. Both checked in the real theme.
+- 14 of 14 compiles pass (7 themes, node-sass and dart-sass).

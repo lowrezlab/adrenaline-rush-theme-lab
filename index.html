@@ -550,7 +550,7 @@ const TAGLINE = 'Premium THCa flower';
 function header(r){
   return `
   <div class="promo"><div class="promo-inner">${
-    (()=>{const items=['Buy 4+ products, save 15%','Buy 8+ products, save 25%','Free shipping over $100','COA on every strain'];
+    (()=>{const items=['100% LEGAL • 100% FARM BILL COMPLIANT','Sign up for emails, save 10%','Buy 4+ products, save 15%','Buy 8+ products, save 25%','Free shipping over $100','COA on every strain'];
       return (r.promo==='marquee'?[...items,...items,...items,...items]:items).map(s=>`<span>${s}</span>`).join('')})()
   }</div></div>
   <header class="hdr"><div class="wrap hdr-row">
@@ -785,17 +785,14 @@ applyScheme();
    CSS compiled with Stencil CLI 10's compiler (node-sass + dart-sass), and the CSS rendered
    on saved copies of adrenalinerush.shop's live home, category, product and cart pages. */
 /* Scrolling promo bar: tested in a local Stencil build of the store's Roots 5.2.2 theme. */
-const PROMO_HTML = `<!-- Scrolling promo bar (Adrenaline Rush Theme Lab). Edit the offers in BOTH lists below. -->
+const PROMO_HTML = `
+<!-- Scrolling promo bar (Adrenaline Rush Theme Lab). Edit the offers in the list below; the script copies them to fill the bar. -->
 <div class="lab-promo" role="region" aria-label="Store offers" data-lab-promo>
     <div class="lab-promo-viewport">
         <div class="lab-promo-track">
             <ul class="lab-promo-items">
-                <li>Buy 4+ products, save 15%</li>
-                <li>Buy 8+ products, save 25%</li>
-                <li>Free shipping over $100</li>
-                <li>COA on every strain</li>
-            </ul>
-            <ul class="lab-promo-items" aria-hidden="true">
+                <li>100% LEGAL • 100% FARM BILL COMPLIANT</li>
+                <li>Sign up for emails, save 10%</li>
                 <li>Buy 4+ products, save 15%</li>
                 <li>Buy 8+ products, save 25%</li>
                 <li>Free shipping over $100</li>
@@ -808,8 +805,30 @@ const PROMO_HTML = `<!-- Scrolling promo bar (Adrenaline Rush Theme Lab). Edit t
 \x3Cscript>
     (function () {
         var bar = document.querySelector('[data-lab-promo]');
-        var btn = bar && bar.querySelector('.lab-promo-toggle');
-        if (!btn) return;
+        if (!bar) return;
+        var track = bar.querySelector('.lab-promo-track');
+        var list = track.querySelector('.lab-promo-items');
+        var btn = bar.querySelector('.lab-promo-toggle');
+        var speed = 40; // pixels per second
+
+        // Copy the offers until each half of the loop is wider than the screen, so the loop never shows a gap.
+        // Runs again once the fonts load, since the text width changes.
+        function fit() {
+            var width = list.offsetWidth;
+            if (!width) return;
+            var perHalf = Math.ceil(Math.max(screen.width, screen.height, window.innerWidth) / width);
+            while (track.children.length < perHalf * 2) {
+                var copy = list.cloneNode(true);
+                copy.setAttribute('aria-hidden', 'true');
+                track.appendChild(copy);
+            }
+            track.style.animationDuration = (track.offsetWidth / 2 / speed) + 's';
+            bar.classList.add('is-ready');
+        }
+        fit();
+        if (document.fonts) document.fonts.addEventListener('loadingdone', fit);
+        window.addEventListener('load', fit);
+
         btn.addEventListener('click', function () {
             var paused = !bar.classList.contains('is-paused');
             bar.classList.toggle('is-paused', paused);
